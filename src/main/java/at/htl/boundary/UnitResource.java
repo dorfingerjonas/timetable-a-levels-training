@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.UnitRepository;
+import at.htl.entity.Unit;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -19,5 +20,11 @@ public class UnitResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getUnitsPerClass(@PathParam("id") String id) {
         return Response.ok(repository.find("schoolclass.id", id).list()).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createOrUpdateUnit(Unit unit) {
+        return Response.ok(repository.save(unit)).build();
     }
 }
