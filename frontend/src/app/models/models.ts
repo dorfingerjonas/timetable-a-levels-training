@@ -17,5 +17,5 @@ export interface Unit {
   subject: string;
   teacher: Teacher;
   schoolclass: Class | null;
-  hasChanged?: 'self' | 'other';
+  hasChanged?: 'self' | 'other' | number;
 }
