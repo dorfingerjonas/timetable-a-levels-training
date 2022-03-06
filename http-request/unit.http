@@ -1,0 +1,14 @@
+POST http://localhost:8080/api/unit/
+Content-Type: application/json
+
+{
+  "day": 2,
+  "schoolclass": {
+    "id": "5AHITM"
+  },
+  "subject": "ITP",
+  "teacher": {
+    "id": 1004
+  },
+  "unit": 2
+}
