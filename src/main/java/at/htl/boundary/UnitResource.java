@@ -27,4 +27,10 @@ public class UnitResource {
     public Response createOrUpdateUnit(Unit unit) {
         return Response.ok(repository.save(unit)).build();
     }
+
+    @Path("{id}")
+    @DELETE
+    public Response delete(@PathParam("id") long id) {
+        return Response.ok(repository.deleteById(id)).build();
+    }
 }
