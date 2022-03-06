@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from './services/backend.service';
 import { Class, Teacher, Unit } from './models/models';
+import { WebsocketService } from './services/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
   public teachers: Teacher[] | null;
   private unsavedUnits: Unit[] | null;
 
-  constructor(private readonly backend: BackendService) {
+  constructor(private readonly backend: BackendService,
+              private readonly webSocket: WebsocketService) {
     this.classes = null;
     this.selectedClass = null;
     this.units = null;
@@ -28,6 +30,25 @@ export class AppComponent implements OnInit {
       this.classes = classes;
       this.selectedClass = classes[0];
       this.changeClass(this.selectedClass);
+    });
+
+    this.webSocket.connect().subscribe(value => {
+      const unit = JSON.parse(JSON.parse(value)) as Unit;
+      const index = this.units?.findIndex(u => u.day === unit.day && u.unit === unit.unit);
+
+      if (unit.hasChanged === this.webSocket.sessionId) {
+        unit.hasChanged = undefined;
+      } else {
+        unit.hasChanged = 'other';
+      }
+
+      if (this.units && unit.schoolclass?.id === this.selectedClass?.id) {
+        if (index && index !== -1) {
+          this.units[index] = unit;
+        } else {
+          this.units = [ ...this.units, unit ];
+        }
+      }
     });
 
     this.backend.get<Teacher[]>('teacher').then(teachers => this.teachers = teachers);
@@ -47,11 +68,10 @@ export class AppComponent implements OnInit {
         unit.schoolclass = this.selectedClass;
 
         this.backend.post<Unit>('unit', unit).then(() => {
-          console.log('updated unit', unit);
+          unit.hasChanged = this.webSocket.sessionId!;
+          this.webSocket.sendMessage(JSON.stringify(unit));
         });
       });
-
-      this.unsavedUnits = [];
     }
   }
 }
