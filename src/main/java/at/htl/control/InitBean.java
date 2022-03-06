@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.entity.Schoolclass;
 import at.htl.entity.Teacher;
 import io.quarkus.runtime.StartupEvent;
 
@@ -13,6 +14,9 @@ public class InitBean {
     @Inject
     TeacherRepository teacherRepository;
 
+    @Inject
+    SchoolclassRepository schoolclassRepository;
+
     public void init(@Observes StartupEvent ev) {
         teacherRepository.save(new Teacher(1000L, "Gerald", "Aistleitner", "216"));
         teacherRepository.save(new Teacher(1001L, "Herbert", "Lackinger", "108"));
@@ -20,5 +24,8 @@ public class InitBean {
         teacherRepository.save(new Teacher(1003L, "Michael", "Bucek", "108"));
         teacherRepository.save(new Teacher(1004L, "Thomas", "Stuetz", "E152"));
         teacherRepository.save(new Teacher(1004L, "Thomas", "Stuetz", "E152"));
+
+        schoolclassRepository.save(new Schoolclass("5AHITM", "135"));
+        schoolclassRepository.save(new Schoolclass("5BHITM", "E58-2"));
     }
 }
