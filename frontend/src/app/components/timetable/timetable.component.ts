@@ -48,12 +48,10 @@ export class TimetableComponent implements OnChanges {
             });
           }
 
-          const day = {
+          this.days.push({
             label,
             units
-          };
-
-          this.days.push(day);
+          });
         });
       }
     }
