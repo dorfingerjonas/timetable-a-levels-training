@@ -7,9 +7,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
 @ApplicationScoped
+@Transactional
 public class UnitRepository implements PanacheRepositoryBase<Unit, Long> {
 
-    @Transactional
     public Unit save(Unit unit) {
         return getEntityManager().merge(unit);
     }
