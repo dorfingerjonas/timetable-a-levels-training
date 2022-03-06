@@ -1,0 +1,24 @@
+<div class="day">
+  <span>No. </span>
+
+  <div class="units-wrapper">
+    <mat-card class="unit" *ngFor="let unitNo of getUnitNumbers()">{{ unitNo + 1 }}</mat-card>
+  </div>
+</div>
+
+<div *ngFor="let day of days" class="day">
+  <span>{{ day.label }}</span>
+
+  <div class="units-wrapper">
+    <mat-card *ngFor="let u of day.units" class="unit changed-{{ u.hasChanged }}">
+      <mat-form-field>
+        <mat-label>Subject</mat-label>
+        <input matInput [(ngModel)]="u.subject" placeholder="Subject" (change)="subjectChanged(u)">
+      </mat-form-field>
+
+      <mat-select *ngIf="teachers" [(ngModel)]="u.teacher.id" (selectionChange)="selectionChange(u)">
+        <mat-option *ngFor="let t of teachers" [value]="t.id">{{ t.firstName }} {{ t.lastName }}</mat-option>
+      </mat-select>
+    </mat-card>
+  </div>
+</div>
