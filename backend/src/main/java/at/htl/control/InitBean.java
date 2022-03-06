@@ -30,7 +30,7 @@ public class InitBean {
         teacherRepository.save(new Teacher(1002L, "David", "Klewein", "216"));
         teacherRepository.save(new Teacher(1003L, "Michael", "Bucek", "108"));
         teacherRepository.save(new Teacher(1004L, "Thomas", "Stuetz", "E152"));
-        teacherRepository.save(new Teacher(1004L, "Thomas", "Stuetz", "E152"));
+        teacherRepository.save(new Teacher(1005L, "Michael", "Holzmann", "E152"));
 
         Schoolclass class5bhitm = new Schoolclass("5BHITM", "E58-2");
 
